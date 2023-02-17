@@ -26,6 +26,14 @@ df = df.drop(["RowNumber", "CustomerId", "Surname"], axis = 1)
 
 df.head()
 
+#Korelasyon grafiği çizdirelim
+plt.figure(figsize=(16,12))
+sns.heatmap(df.corr(), cmap="bwr", annot=True)
+plt.show()
+plt.savefig('correlationmatrix.tiff')
+
+
+
 df["Exited"].value_counts()
 
 cat_cols, num_cols, cat_but_car=grab_col_names(df)
@@ -63,6 +71,8 @@ plt.show()
 
 df_out.head()
 
+df_out.info()
+
 lbe=LabelEncoder()
 df_out["Gender"]=lbe.fit_transform(df_out["Gender"])
 df_out["Geography"]=lbe.fit_transform(df_out["Geography"])
@@ -74,6 +84,7 @@ df_out["Balance"]=df_out["Balance"].astype(int)
 df_out["EstimatedSalary"]=df_out["EstimatedSalary"].astype(int)
 
 df_out.head()
+
 
 
 y=df_out["Exited"]
@@ -117,6 +128,8 @@ ImbalanceDuzenle=ImbalanceDuzenle(X,y)
 
 X_ros,y_ros= ImbalanceDuzenle.ROS()
 ROSyontemML=YontemML(X_ros,y_ros)
+
+
 
 ROSloj_model=ROSyontemML.Logistic()
 ROSsvm_model=ROSyontemML.Svm()
